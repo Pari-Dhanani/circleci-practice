@@ -3,20 +3,20 @@ version: 2.1
 jobs:
   say_hello:
     docker:
-      -image: cimg/base:stable
+      -image:cimg/base:stable
     steps:
       - checkout
       - run:
-          name: "Say Hello"
-          command: "echo hello world!"
+          name:"Say Hello"
+          command:"echo hello world!"
   say_bye:
     docker:
-      -image: cimg/base:stable
+      -image:cimg/base:stable
     steps:
       - checkout
       - run:
-          name: "Say Hello"
-          command: "echo hello world!"
+          name:"Say Bye"
+          command:"echo bye world!"
 
 workflows:
   hello_and_bye:
