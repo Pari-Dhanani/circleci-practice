@@ -1,9 +1,12 @@
 version: 2.1
 
+    
+
 jobs:
   say_hello:
-    docker:
-      - image: cimg/base:stable
+    machine: true
+    resource_class: cisco/ansible-dcnm
+
     steps:
       - checkout
       - run:
