@@ -21,8 +21,53 @@ jobs:
           name: "Say Bye"
           command: "echo bye world!"
 
+  deploy-release:
+
+    working_directory: ~/repo
+    docker:
+      - image: cimg/base:stable
+
+    steps:
+      - checkout
+      - run:
+          name: Update galaxy.yml and README files
+          command: |
+            
+            bash file.sh
+            
+            sed -i "4s/.*/version: $COLLECTION_VERSION/" galaxy.yml
+            sed -i "66s/.*/    version: $COLLECTION_VERSION/" README.md
+
+      - run:
+          name: Draft a Release
+          command: |
+
+            bash file.sh
+
+            git checkout -b $COLLECTION_VERSION
+            git add -A
+            git commit -m "Released new version: $COLLECTION_VERSION"
+            git status
+            git push --set-upstream origin main
+
+
+
 workflows:
   hello_and_bye:
     jobs:
       - say_hello
       - say_bye
+
+
+  deploy:
+    jobs:
+      - deploy-release:
+          
+          filters:
+            branches:
+              only:
+                - main
+
+
+
+
